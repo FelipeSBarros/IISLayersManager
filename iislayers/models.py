@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse_lazy
 
 class Layer(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -32,9 +33,9 @@ class Layer(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     modified_date = models.DateTimeField(blank=True, null=True)
     observations = models.TextField(blank=True, null=True)
-    layerUrl = models.CharField(max_length=200, blank=True, null=True)
-    projectUrl = models.CharField(max_length=200, blank=True, null=True)
-    repositoryUrl = models.CharField(max_length=200, blank=True, null=True)
+    layerUrl = models.URLField(blank=True, null=True)
+    projectUrl = models.URLField(blank=True, null=True)
+    repositoryUrl = models.URLField(blank=True, null=True)
     doi = models.CharField(max_length=200, blank=True, null=True)
 
     def modify(self):
@@ -43,3 +44,6 @@ class Layer(models.Model):
 
     def __str__(self):
         return self.layerName
+
+    def get_absolute_url(self):
+        return reverse_lazy('iislayers:layer_details', kwargs={'pk': self.pk})

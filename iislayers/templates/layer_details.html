@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/main.css' %}" rel="stylesheet">
+{% endblock css %}
+
+{% block content %}
+
+<a href="{% url 'iislayers:list' %}"> voltar </a>
+
+<h1>{{ layer.layerName }}</h1>
+<strong>id: {{ layer.pk }}</strong>
+<div class="row">
+<div class="col-sm-8">
+    <table class = "table table-user-information">
+        <tbody>
+        <tr>
+
+            <th class="text-right">Layer name</th>
+            <td>{{ layer.layerName }}</td>
+        </tr>
+
+            <th class="text-right">Layer type</th>
+            <td>{{ layer.layerType }}</td>
+        </tr>
+
+            <th class="text-right">Layer format</th>
+            <td>{{ layer.layerExtension }}</td>
+        </tr>
+
+            <th class="text-right">Layer resolution</th>
+            <td>{{ layer.layerResolution }}</td>
+        </tr>
+
+            <th class="text-right">Layer year</th>
+            <td>{{ layer.publishedYear }}</td>
+        </tr>
+
+            <th class="text-right">Layer Coordinate Reference System</th>
+            <td>{{ layer.crs }}</td>
+        </tr>
+
+            <th class="text-right">Layer Source</th>
+            <td>{{ layer.source }}</td>
+        </tr>
+
+            <th class="text-right">Observations</th>
+            <td>{{ layer.observations }}</td>
+        </tr>
+
+            <th class="text-right">Layer cloud URL</th>
+            <td><a href="{{ layer.layerUrl }}">{{ layer.layerUrl }}</a></td>
+        </tr>
+
+            <th class="text-right">Projoect URL</th>
+            <td><a href="{{ layer.projectUrl }}">{{ layer.projectUrl }}</a></td>
+        </tr>
+
+            <th class="text-right">
+                <i class="fa fa-github" aria-hidden="true">  URL</i></th>
+            <td><a href="{{ layer.repositoryUrl }}">{{ layer.repositoryUrl }}</a></td>
+        </tr>
+
+            <th class="text-right">Paper DOI</th>
+            <td>{{ layer.doi }}</td>
+        </tr>
+
+            <th class="text-right">Creation data</th>
+            <td>{{ layer.createdDate }}</td>
+        </tr>
+
+            <th class="text-right">Last modification</th>
+            <td>{{ layer.modifiedDate }}</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+
+    {% if layer.geom_original %}
+    <div class="col-sm-8">
+        <input type="hidden" id="y_cen" value="{{ layer.geom_original.y|safe }}">
+        <input type="hidden" id="x_cen" value="{{ layer.geom_original.x|safe }}">
+        <div id="map-detail"></div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock content %}
+{% block js %}
+    <script src="{% static 'libs/leaflet/leaflet.js' %}"></script>
+
+    <script>
+        var y_cen = $("#y_cen").val();
+        var x_cen = $("#x_cen").val();
+
+        var gstreets = L.tileLayer('http://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}', {
+            maxZoom: 20,
+            attribution: 'google'
+        });
+
+        var satellite = L.tileLayer('http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        attribution: 'google'});
+
+        var occ = L.marker([y_cen, x_cen]);
+
+        var map = L.map('map-detail', {
+            center: [y_cen, x_cen],
+            zoom: 9,
+            layers: [gstreets, satellite, occ],
+        });
+
+        var baseLayers = {
+            "Google Streets": gstreets, satellite,
+        };
+
+        var overlays = {
+            "Ocorrencia": occ,
+        };
+
+        var control = L.control.layers(baseLayers, overlays).addTo(map);
+
+    </script>
+
+{% endblock js %}

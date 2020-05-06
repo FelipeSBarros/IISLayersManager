@@ -1,25 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="col-md-8">
+<div class="col-md-12">
     {% if user.is_authenticated %}
-        <h2><i class ="fa fa-pagelines"></i> Layers list</h2>
+        <h2><i class ="fa fa-database"></i> Layers list</h2>
         {% if object_list %}
             <table class = 'table table-striped'>
                 <thead>
                 <tr>
                     <th>Layer Name</th>
                     <th>Layer Type</th>
-                    <th>Layer Extension</th>
                     <th>Layer Resolution</th>
                     <th>Publication Year</th>
-                    <th>CRS</th>
                     <th>Source</th>
-                    <th>Observations</th>
-                    <th>Layer URL</th>
-                    <th>Project URL</th>
-                    <th>Repository URL</th>
-                    <th>DOI</th>
                     <th>Created on</th>
                     <th>Modified on</th>
 
@@ -29,19 +22,12 @@
                 {% for object in page_obj %}
                 <tr>
                     <td>
-                        <a href="#">{{ object.layerName }}</a>
+                        <a href="{{ object.get_absolute_url }}">{{ object.layerName }}</a>
                     </td>
                     <td>{{ object.layerType }}</td>
-                    <td>{{ object.layerExtension }}</td>
                     <td>{{ object.layerResolution }}</td>
                     <td>{{ object.publishedYear }}</td>
-                    <td>{{ object.crs }}</td>
                     <td>{{ object.source }}</td>
-                    <td>{{ object.observations }}</td>
-                    <td>{{ object.layerUrl }}</td>
-                    <td>{{ object.projectUrl }}</td>
-                    <td>{{ object.repositoryUrl }}</td>
-                    <td>{{ object.doi }}</td>
                     <td>{{ object.createdDate }}</td>
                     <td>{{ object.modifiedDate }}</td>
                 </tr>
