@@ -19,27 +19,25 @@
                 </div>
             </li>
         </ul>
-        <!--<ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
 
-            {% if user.is_superuser %}
+            <!--{% if user.is_superuser %}
                   <li class="nav-item">
                     <a role="button" class="btn btn-warning" href="#"> Crear usuario </a>
                   </li>
                   <li class="nav-item">' '</li>
 
-                {% endif %}
+                {% endif %}-->
 
             <li class="nav-item">
-                <a role="button" class="btn btn-danger" href="#">
-                    <span></span><span class="fa fa-sign-in"></span> Salir </a>
+                <a role="button" class="btn btn-danger" href="{% url 'logout' %}">
+                    <span></span><span class="fa fa-sign-in"></span> Logout </a>
             </li>
-
-
 
             {% else %}
             <li class="nav-item">
-                <a  role="button" class="btn navbar-btn btn-success" href="#">
+                <a  role="button" class="btn navbar-btn btn-success" href="{% url 'login' %}">
                     <span class="fa fa-user"></span> Login </a>
             </li>
             {% endif %}
