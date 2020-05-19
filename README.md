@@ -23,7 +23,7 @@ python manage.py startapp iislayers
 **Após criar o models:**
 ```
 python manage.py migrate
-python manage.py makemigrations IIS
-python manage.py migrate IIS
+python manage.py makemigrations iislayers
+python manage.py migrate iislayers
 python manage.py createsuperuser
 ```

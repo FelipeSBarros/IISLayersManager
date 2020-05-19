@@ -19,14 +19,14 @@
                 {% for object in page_obj %}
                 <tr>
                     <td>
-                        <a href="{{ object.get_absolute_url }}">{{ object.layerName }}</a>
+                        <a href="{{ object.get_absolute_url }}">{{ object.layer_name }}</a>
                     </td>
-                    <td>{{ object.layerType }}</td>
-                    <td>{{ object.layerResolution }}</td>
-                    <td>{{ object.publishedYear }}</td>
+                    <td>{{ object.layer_type }}</td>
+                    <td>{{ object.layer_resolution }}</td>
+                    <td>{{ object.published_year }}</td>
                     <td>{{ object.source }}</td>
-                    <td>{{ object.createdDate }}</td>
-                    <td>{{ object.modifiedDate }}</td>
+                    <td>{{ object.created_date }}</td>
+                    <td>{{ object.modified_date }}</td>
                 </tr>
                 {% endfor %}
             </table>
@@ -51,7 +51,7 @@
     </nav>
         {% else %}
             <p class="alert alert-warning">
-            <i class="fa fa-warning"></i> Base de datos sin registros!</p>
+            <i class="fa fa-warning"></i> Database without layer registered!</p>
         {% endif %}
 </div>
 

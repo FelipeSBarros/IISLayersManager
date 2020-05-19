@@ -1,94 +1,10 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block content %}
-<div class = "jumbotron">
-    <div class = "container">
-        <h2>Agregar Occurencia</h2>
-        <div class="accordion" id="accordionExample">
-          <form method="POST" class="post-form">
-              {% csrf_token %}
-          <div class="card ">
-            <div class="card-header" id="headingOne">
-              <h3 class="mb-0">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Datos de registro
-                </button>
-              </h3>
-            </div>
-
-            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="card-body">
-                  <h5>Obligatórios</h5>
-                  <p><s>dcterms:modified</s></p>
-                  <p>Tipo de registro ("basisOfRecord") {{ form.basisOfRecord }}</p>
-                  <p>Código de la institución {{ form.institutionCode }}</p>
-                  <p>Código de la colección {{ form.collectionCode }}</p>
-                  <p>Numero de catálogo {{ form.catalogNumber }}</p>
-                  <p>Colector {{ form.recordedBy }}</p>
-                  <p>Número de colecta {{ form.recordNumber }} </p>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-              <div class="card-header" id="headingThree">
-                <h3 class="mb-0">
-                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                      Datos de la especie
-                    </button>
-                </h3>
-              </div>
-              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-                  <div class="card-body">
-                  <h5>Obligatórios</h5>
-                  <p>Nombre cientifico {{ form.scientificName }}</p>
-                  <p>Reino {{ form.kingdom }}</p>
-                  <p>Phylum {{ form.phylum }}</p>
-                  <p>Clase {{ form.clase }}</p>
-                  <p>Ordem {{ form.order }}</p>
-                  <p>Familia {{ form.family }}</p>
-                  <p>Genero {{ form.genus }} </p>
-                  <br>
-                  <h5>Opcinonales</h5>
-                  <p>specificEpithet {{ form.specificEpithet }} </p>
-                  <p>TaxonRank {{ form.taxonRank }}</p>
-                  <p>infraspecificEpithet {{ form.infraspecificEpithet }} </p>
-                  <p><s>scientificNameAutorship</s></p>
-                  <p>identificationQualifier {{ form.identificationQualifier }} </p>
-                  </div>
-              </div>
-           </div>
-          <div class="card">
-              <div class="card-header" id="headingFour">
-                <h3 class="mb-0">
-                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                      Información espacial
-                    </button>
-                </h3>
-              </div>
-              <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
-                  <div class="card-body">
-                  <h5>Obligatórios</h5>
-                  <p>País {{ form.county }}</p>
-                  <p>Provincia {{ form.stateProvince }}</p>
-                  <p>Localidad {{ form.locality }}</p>
-                  <br>
-                  <h5>Opcionales</h5>
-                  <p>Latitude {{ form.decimalLatitude }}</p>
-                  <p>Logitude {{ form.decimalLongitude }}</p>
-                  <p><s>Datum</s></p>
-                  <p><s>Incertidumbre de las coordenada</s></p>
-                  <p><s>Protocolo de georeferenciación</s></p>
-                  <p><s>Fuente de georeferenciación</s></p>
-                  <p><s>waterBody</s></p>
-
-                </div>
-              </div>
-           </div>
-        <button type="submit" class="btn btn-success">Guardar</button>
-
-        </form>
-    </div>
-</div>
-</div>
-
+    <h2>New post</h2>
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save btn btn-default">Save</button>
+    </form>
 {% endblock %}

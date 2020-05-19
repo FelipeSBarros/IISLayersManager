@@ -1,8 +1,12 @@
 from django.shortcuts import render
+from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 
 from .models import Layer
+from .forms import LayerForm
+
+from doi_api import getPaperMetaData
 
 def index(request):
     return render(request, 'index.html')
@@ -34,20 +38,32 @@ def layer_details(request, pk):
 @login_required
 def add_layer(request):
     if request.method == "POST":
-        form = OccForm(request.POST)
+        form = LayerForm(request.POST)
         if form.is_valid():
-            occ = form.save(commit=False)
-            occ.author = request.user
-            # occ.published_date = timezone.now()
-            occ.save()
-            print("OK")
-            template_name = 'occs_details.html'
-            # occ = Occurrences_imibio.objects.get(pk=pk)
+            layer = form.save(commit=False)
+            # about registration/modification
+            layer.registered_by = request.user
+            layer.created_date = timezone.now()
+            layer.modified_by = request.user
+            paper_metadata_result = getPaperMetaData(layer.doi)
+
+            # About layer publication
+            layer.published_year = str(paper_metadata_result['paper_year'])
+            layer.paper_title = paper_metadata_result['paper_title']
+            layer.paper_author = paper_metadata_result['paper_author']
+            layer.paper_author_ORCID = paper_metadata_result['paper_author_ORCID']
+            layer.paper_link = paper_metadata_result['paper_link']
+            layer.paper_subject = paper_metadata_result['paper_subject']
+
+            layer.save()
+            print("Layer Saved")
+            template_name = 'layer_details.html'
+            #layer_added = Layer.objects.get(pk=pk)
             context = {
-                'occ_detail': occ,
+                'layer_detail': layer,
             }
             return render(request, template_name, context)
 
     else:
-        form = OccForm()
-    return render(request, 'agregar_occ.html', {'form': form})
+        form = LayerForm()
+    return render(request, 'add_layer.html', {'form': form})
