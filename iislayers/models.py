@@ -8,7 +8,7 @@ class Layer(models.Model):
     registered_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=timezone.now)
     modified_date = models.DateTimeField(blank=True, null=True)
-    modified_by = models.TextField(blank=True, null=True)#models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    modified_by = models.CharField(max_length=200, blank=True, null=True)#models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     observations = models.TextField(blank=True, null=True)
 
     # About layer registered
@@ -52,10 +52,10 @@ class Layer(models.Model):
     paper_title = models.CharField(max_length=200, blank=True, null=True)
     paper_author = models.CharField(max_length=200, blank=True, null=True)
     paper_link = models.CharField(max_length=200, blank=True, null=True)
-    paper_subject =  models.CharField(max_length=200, blank=True, null=True)
+    paper_subject = models.CharField(max_length=200, blank=True, null=True)
     paper_author_ORCID = models.URLField(blank=True, null=True)
-    paper_year = models.TextField(blank=True, null=True)
-    project_name = models.TextField(blank=True, null=True)
+    paper_year = models.CharField(max_length=4, blank=True, null=True)
+    project_name = models.CharField(max_length=200, blank=True, null=True)
 
     # Layer link
     layer_url = models.URLField(blank=True, null=True)

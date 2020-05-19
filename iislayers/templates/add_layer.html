@@ -2,9 +2,65 @@
 {% load static %}
 
 {% block content %}
-    <h2>New post</h2>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+<div class = "jumbotron">
+    <div class = "container">
+        <h2>Add new Layer</h2>
+        <div class="accordion" id="accordionExample">
+          <form method="POST" class="post-form">
+              {% csrf_token %}
+          <div class="card ">
+            <div class="card-header" id="headingOne">
+              <h3 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Layer's tecnical information
+                </button>
+              </h3>
+            </div>
+  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                  <p>Layer name: {{ form.layer_name }}</p>
+                  <p>Layer type: {{ form.layer_type }}</p>
+                  <p>Layer resolution: {{ form.layer_resolution }}</p>
+                  <p>Layer resolution unit {{ form.layer_resolution_unit }}</p>
+                  <p>Layer Coordinate Reference System {{ form.layer_crs }}</p>
+                  <p>Layer year reference: {{ form.layer_year_reference }} </p>
+                  <p>General observations: {{ form.observations }} </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h3 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      About layer's publication
+                    </button>
+                </h3>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                  <div class="card-body">
+                  <p>Paper DOI {{ form.doi }}</p>
+                  <p>Project name {{ form.project_name }}</p>
+                  <p>Project URL {{ form.project_url }}<i class="fa fa-link fa-2x" aria-hidden="true"></i></p>
+
+                  </div>
+              </div>
+           </div>
+
+          <div class="card">
+              <div class="card-header" id="headingThree">
+                <h3 class="mb-0">
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      Layer's links
+                    </button>
+                </h3>
+              </div>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                  <div class="card-body">
+                  <p>Layer URL {{ form.layer_url }} <i class="fa fa-dropbox fa-2x" aria-hidden="true"></i></p>
+                  <p>Repository URL {{ form.repository_url }} <i class="fa fa-github fa-2x" aria-hidden="true"></i></p>
+                  </div>
+              </div>
+           </div>
+              <button type="submit" class="btn pull-righ btn-success"> Add </button>
 {% endblock %}

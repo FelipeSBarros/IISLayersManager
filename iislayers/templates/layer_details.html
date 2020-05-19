@@ -16,7 +16,7 @@
     <table class = "table table-user-information">
         <tbody>
         <tr>
-            # aBout layer
+            <!--# aBout layer-->
             <th class="text-right">Layer name</th>
             <td>{{ layer.layer_name }}</td>
         </tr>
@@ -42,7 +42,7 @@
         </tr>
 
 
-        # About layer publication
+        <!--# About layer publication -->
             <th class="text-right">Paper DOI</th>
             <td>{{ layer.doi }}</td>
         </tr>
@@ -67,26 +67,27 @@
         <td>{{ layer.observations }}</td>
         </tr>
 
+        {% if layer.layer_url is not None %}
         <th class="text-right">Layer cloud URL</th>
-        <td><a href="{{ layer.layerUrl }}">{{ layer.layer_url }}</a></td>
+        <td><a href="{{ layer.layer_url }}">{{ layer.layer_url }}</a></td>
         </tr>
+        {% endif %}
 
+        {% if project_url is not None %}
         <th class="text-right">Project URL</th>
-        <td><a href="{{ layer.projectUrl }}">{{ layer.project_url }}</a></td>
+        <td><a href="{{ layer.project_url }}">{{ layer.project_url }}</a></td>
         </tr>
+        {% endif %}
 
+        {% if repository_url is not None  %}
         <th class="text-right">
         <i class="fa fa-github fa-2x" aria-hidden="true"></i></th>
-        <td><a href="{{ layer.repositoryUrl }}">{{ layer.repository_url }}</a></td>
+        <td><a href="{{ layer.repository_url }}">{{ layer.repository_url }}</a></td>
         </tr>
+        {% endif %}
 
 
-        # About creation
-            <th class="text-right">Observations</th>
-            <td>{{ layer.observations }}</td>
-        </tr>
-
-
+        <!-- # About creation -->
             <th class="text-right">Creation date</th>
             <td>{{ layer.created_date }}</td>
         </tr>

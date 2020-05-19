@@ -45,18 +45,21 @@ def add_layer(request):
             layer.registered_by = request.user
             layer.created_date = timezone.now()
             layer.modified_by = request.user
-            paper_metadata_result = getPaperMetaData(layer.doi)
+            if layer.doi is not None:
 
-            # About layer publication
-            layer.published_year = str(paper_metadata_result['paper_year'])
-            layer.paper_title = paper_metadata_result['paper_title']
-            layer.paper_author = paper_metadata_result['paper_author']
-            layer.paper_author_ORCID = paper_metadata_result['paper_author_ORCID']
-            layer.paper_link = paper_metadata_result['paper_link']
-            layer.paper_subject = paper_metadata_result['paper_subject']
+                # request paper metadata based on DOI
+                paper_metadata_result = getPaperMetaData(layer.doi)
+
+                # About layer publication
+                layer.published_year = str(paper_metadata_result['paper_year'])
+                layer.paper_title = paper_metadata_result['paper_title']
+                layer.paper_author = paper_metadata_result['paper_author']
+                layer.paper_author_ORCID = paper_metadata_result['paper_author_ORCID']
+                layer.paper_link = paper_metadata_result['paper_link']
+                layer.paper_subject = paper_metadata_result['paper_subject']
 
             layer.save()
-            print("Layer Saved")
+
             template_name = 'layer_details.html'
             #layer_added = Layer.objects.get(pk=pk)
             context = {

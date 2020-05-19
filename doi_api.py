@@ -12,9 +12,13 @@ def getPaperMetaData(doi = '10.1016/j.tree.2019.01.013'):
     else:
         print("Succes!")
         paper_dict = paper_metadata.json()
+        sub = ''
+        if 'subject' in paper_dict['message'].keys():
+            sub = paper_dict['message']['subject']
+
         result = {'paper_title': paper_dict['message']['title'][0],
             'paper_link': paper_dict['message']['URL'],
-            'paper_subject': paper_dict['message']['subject'],
+            'paper_subject': sub,
             'paper_author_ORCID': paper_dict['message']['author'][0]['ORCID'],
             'paper_author': paper_dict['message']['author'][0]['given'] + ' ' + paper_dict['message']['author'][0]['family'],
             'paper_year': paper_dict['message']['published-print']['date-parts'][0][0]
