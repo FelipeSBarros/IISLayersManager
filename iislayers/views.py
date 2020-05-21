@@ -63,7 +63,7 @@ def add_layer(request):
             template_name = 'layer_details.html'
             #layer_added = Layer.objects.get(pk=pk)
             context = {
-                'layer_detail': layer,
+                'layer': layer,
             }
             return render(request, template_name, context)
 

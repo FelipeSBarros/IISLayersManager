@@ -22,13 +22,13 @@
         <ul class="nav navbar-nav navbar-right">
             {% if user.is_authenticated %}
 
-            <!--{% if user.is_superuser %}
+            {% if user.is_superuser %}
                   <li class="nav-item">
-                    <a role="button" class="btn btn-warning" href="#"> Crear usuario </a>
+                    <a role="button" class="btn btn-warning" href="{% url 'signup' %}"> Create new user </a>
                   </li>
                   <li class="nav-item">' '</li>
 
-                {% endif %}-->
+                {% endif %}
 
             <li class="nav-item">
                 <a role="button" class="btn btn-danger" href="{% url 'logout' %}">
