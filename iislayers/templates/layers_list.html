@@ -3,6 +3,36 @@
 {% block content %}
 <div class="col-md-12">
         <h2><i class ="fa fa-database"></i> Layers list</h2>
+    		<div class="col-md-5">
+                        <form action="" method="GET" id="search-form" class="form-horizontal">
+                            <div class="form-group row">
+                                <div class="input-group">
+                                    <select type="select" name="q" class="form-control" id="id_select">
+                                        <option value="">Escolha...</option>
+                                        <option value="layer_name">Layer Name</option>
+                                        <option value="layer_resolution">Layer resolution</option>
+                                        <option value="doi">DOI</option>
+                                        <option value="paper_subject">Subject</option>
+                                    </select>
+                                    <input type="text" name="v"
+                                           class="form-control" id="id_search_box"
+                                           value="{{ v|default_if_none:'' }}"
+                                           placeholder="buscar"/>
+                                    <span class="input-group-btn">
+                                    <button type="submit" class="sh1 btn btn-primary">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                    </span>
+                                    {% if v %}
+                                        <a href="{% url 'iislayers:list' %}"
+                                           class="btn btn-instagram">
+                                            <i class="fa fa-ban" aria-hidden="true"></i>
+                                            <span></span></a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
         {% if object_list %}
             <table class = 'table table-striped'>
                 <thead>

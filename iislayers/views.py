@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.views.generic import ListView
+from decimal import Decimal
 
 from .models import Layer
 from .forms import LayerForm
@@ -11,20 +13,34 @@ from doi_api import getPaperMetaData
 def index(request):
     return render(request, 'index.html')
 
-def layers_list(request):
+class LayersListView(ListView):
+    paginate_by = 15
     template_name = 'layers_list.html'
-    objects = Layer.objects.all()#'.only(
-        #'scientificName', 'family', 'hasCoordinate',
-        #'county', 'taxonRank', 'municipality', 'locality'
-    #)
-    paginator = Paginator(objects, 25)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    context = {
-        'object_list': objects,
-        'page_obj': page_obj,
-    }
-    return render(request, template_name, context)
+
+    def get_queryset(self):
+        qs = Layer.objects.all()
+        q = self.request.GET.get('q')
+        v = self.request.GET.get('v')
+
+        if q == 'layer_name':
+            qs = qs.filter(
+                layer_name__icontains=v
+            )
+        if q == 'layer_resolution':
+            v = Decimal(v.replace(',', '.'))
+            qs = qs.filter(
+                layer_resolution__icontains=v
+            )
+        if q == 'doi':
+            qs = qs.filter(
+                doi__icontains=v
+            )
+        if q == 'paper_subject':
+            qs = qs.filter(
+                paper_subject__icontains=v
+            )
+
+        return qs
 
 @login_required
 def layer_details(request, pk):
@@ -70,3 +86,5 @@ def add_layer(request):
     else:
         form = LayerForm()
     return render(request, 'add_layer.html', {'form': form})
+
+layer_list = LayersListView.as_view()
