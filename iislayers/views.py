@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
 from django.views.generic import ListView
 from decimal import Decimal
 
@@ -27,10 +26,11 @@ class LayersListView(ListView):
                 layer_name__icontains=v
             )
         if q == 'layer_resolution':
-            v = Decimal(v.replace(',', '.'))
-            qs = qs.filter(
-                layer_resolution__icontains=v
-            )
+            if v.isnumeric():
+                v = Decimal(v.replace(',', '.'))
+                qs = qs.filter(
+                    layer_resolution=v
+                )
         if q == 'doi':
             qs = qs.filter(
                 doi__icontains=v
@@ -41,6 +41,17 @@ class LayersListView(ListView):
             )
 
         return qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.GET.get('q'):
+            context['v'] = self.request.GET.get('v')
+        else:
+            context['v'] = ''
+
+        context['total_itens'] = self.get_queryset().count()
+        return context
+
 
 @login_required
 def layer_details(request, pk):

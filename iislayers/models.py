@@ -64,7 +64,7 @@ class Layer(models.Model):
 
     def modify(self):
         self.modified_date = timezone.now()
-        #self.modified_by = settings.AUTH_USER_MODEL
+        self.modified_by = settings.AUTH_USER_MODEL
         self.save()
 
     def __str__(self):
