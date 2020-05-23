@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
@@ -72,6 +72,7 @@ def add_layer(request):
             layer.registered_by = request.user
             layer.created_date = timezone.now()
             layer.modified_by = request.user
+            layer.modified_date = timezone.now()
             if layer.doi is not None:
 
                 # request paper metadata based on DOI
@@ -93,9 +94,25 @@ def add_layer(request):
                 'layer': layer,
             }
             return render(request, template_name, context)
+            #return redirect('post_detail', pk=post.pk)
 
     else:
         form = LayerForm()
+    return render(request, 'add_layer.html', {'form': form})
+
+@login_required
+def edit_layer(request, pk):
+    layer = get_object_or_404(Layer, pk=pk)
+    if request.method == "POST":
+        form = LayerForm(request.POST, instance=layer)
+        if form.is_valid():
+            layer = form.save(commit=False)
+            layer.modified_by = str(request.user)
+            layer.modified_date = timezone.now()
+            layer.save()
+            return redirect('iislayers:layer_details', pk=layer.pk)
+    else:
+        form = LayerForm(instance=layer)
     return render(request, 'add_layer.html', {'form': form})
 
 layer_list = LayersListView.as_view()

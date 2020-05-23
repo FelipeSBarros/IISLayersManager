@@ -7,10 +7,15 @@
 
 {% block content %}
 
-<a href="{% url 'iislayers:list' %}"> voltar </a>
+<h1>
+    <!---
+    <a class="btn btn-success" href="{% url 'iislayers:list' %}"><span class="fa fa-angle-left"></span> Back to layer list </a>
+    --->
+{{ layer.layer_name }}
+<a class="btn btn-warning" href="{% url 'iislayers:edit_layer' pk=layer.pk %}"><span class="fa fa-edit"></span> Edit layer detail</a>
+</h1>
 
-<h1>{{ layer.layer_name }}</h1>
-<strong>id: {{ layer.pk }}</strong>
+
 <div class="row">
 <div class="col-sm-8">
     <table class = "table table-user-information">
