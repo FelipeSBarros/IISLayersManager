@@ -2,9 +2,9 @@ from django import forms
 from .models import Layer
 
 class LayerForm(forms.ModelForm):
-    doi = forms.CharField(label='e.g.: 10.1145/1067268.1067287')
-    layer_year_reference = forms.CharField(label="e.g: 2000 or 2000 and 2001 or 2000-2001")
-    layer_subject = forms.CharField(label="use comma (' , ') to separate subjects")
+    doi = forms.CharField(required=False, label='e.g.: 10.1145/1067268.1067287')
+    layer_year_reference = forms.CharField(required=False, label="e.g: 2000 or 2000 and 2001 or 2000-2001")
+    layer_subject = forms.CharField(required=False, label="use comma (' , ') to separate subjects")
 
 
     class Meta:

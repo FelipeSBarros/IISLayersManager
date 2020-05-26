@@ -109,6 +109,18 @@ def edit_layer(request, pk):
             layer = form.save(commit=False)
             layer.modified_by = str(request.user)
             layer.modified_date = timezone.now()
+            if layer.doi is not None:
+
+                # request paper metadata based on DOI
+                paper_metadata_result = getPaperMetaData(layer.doi)
+
+                # About layer publication
+                layer.published_year = str(paper_metadata_result['paper_year'])
+                layer.paper_title = paper_metadata_result['paper_title']
+                layer.paper_author = paper_metadata_result['paper_author']
+                layer.paper_author_ORCID = paper_metadata_result['paper_author_ORCID']
+                layer.paper_link = paper_metadata_result['paper_link']
+                layer.paper_subject = paper_metadata_result['paper_subject']
             layer.save()
             return redirect('iislayers:layer_details', pk=layer.pk)
     else:
