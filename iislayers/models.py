@@ -45,6 +45,7 @@ class Layer(models.Model):
     )
     layer_crs = models.IntegerField(blank=True, null=True)
     layer_year_reference = models.CharField(max_length=200, blank=True, null=True)
+    layer_subject = models.CharField(max_length=200, blank=True, null=True)
 
     # About layer publication
     doi = models.CharField(max_length=200, blank=True, null=True)

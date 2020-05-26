@@ -35,9 +35,9 @@ class LayersListView(ListView):
             qs = qs.filter(
                 doi__icontains=v
             )
-        if q == 'paper_subject':
+        if q == 'layer_subject':
             qs = qs.filter(
-                paper_subject__icontains=v
+                layer_subject__icontains=v
             )
 
         return qs

@@ -23,7 +23,11 @@
                   <p>Layer resolution: {{ form.layer_resolution }}</p>
                   <p>Layer resolution unit {{ form.layer_resolution_unit }}</p>
                   <p>Layer Coordinate Reference System {{ form.layer_crs }}</p>
-                  <p>Layer year reference: {{ form.layer_year_reference }} </p>
+                  <p>Layer year reference: {{ form.layer_year_reference }}
+                      <span class="text-secondary">{{ form.layer_year_reference.label_tag }}</span></p>
+
+                  <p>Layer subjects: {{ form.layer_subject }}
+                      <span class="text-secondary">{{ form.layer_subject.label_tag }}</span> </p>
                   <p>General observations: {{ form.observations }} </p>
               </div>
             </div>
@@ -39,7 +43,8 @@
               </div>
               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                   <div class="card-body">
-                  <p>Paper DOI {{ form.doi }}</p>
+                  <p>Paper DOI {{ form.doi }}
+                      <span class="text-secondary">{{ form.doi.label_tag }}</span></p>
                   <p>Project name {{ form.project_name }}</p>
                   <p>Project URL {{ form.project_url }}<i class="fa fa-link fa-2x" aria-hidden="true"></i></p>
 

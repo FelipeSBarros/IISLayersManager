@@ -6,20 +6,34 @@ def getPaperMetaData(doi = '10.1016/j.tree.2019.01.013'):
 
     paper_metadata = requests.get(paper_url)
 
+    sub = ''
+    orcid = ''
+
     if paper_metadata.status_code != 200:
         # This means something went wrong.
         print("Error on getPaperMetaData function!")
+        result = {'paper_title': 'Error on DOI',
+                  'paper_link': '',
+                  'paper_subject': sub,
+                  'paper_author_ORCID': orcid,
+                  'paper_author': '',
+                  'paper_year': ''
+                  }
+        return result
     else:
         print("Succes!")
         paper_dict = paper_metadata.json()
-        sub = ''
+
         if 'subject' in paper_dict['message'].keys():
             sub = paper_dict['message']['subject']
+
+        if 'ORCID' in paper_dict['message']['author'][0].keys():
+            orcid = paper_dict['message']['author'][0]['ORCID']
 
         result = {'paper_title': paper_dict['message']['title'][0],
             'paper_link': paper_dict['message']['URL'],
             'paper_subject': sub,
-            'paper_author_ORCID': paper_dict['message']['author'][0]['ORCID'],
+            'paper_author_ORCID': orcid,
             'paper_author': paper_dict['message']['author'][0]['given'] + ' ' + paper_dict['message']['author'][0]['family'],
             'paper_year': paper_dict['message']['published-print']['date-parts'][0][0]
                   }

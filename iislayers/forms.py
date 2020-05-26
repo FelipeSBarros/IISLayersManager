@@ -2,6 +2,10 @@ from django import forms
 from .models import Layer
 
 class LayerForm(forms.ModelForm):
+    doi = forms.CharField(label='e.g.: 10.1145/1067268.1067287')
+    layer_year_reference = forms.CharField(label="e.g: 2000 or 2000 and 2001 or 2000-2001")
+    layer_subject = forms.CharField(label="use comma (' , ') to separate subjects")
+
 
     class Meta:
         model = Layer
@@ -13,6 +17,8 @@ class LayerForm(forms.ModelForm):
         'layer_resolution_unit',
         'layer_crs',
         'layer_year_reference',
+        'layer_subject',
+        'observations',
 
         # About layer publication
         'doi',
