@@ -27,3 +27,18 @@ python manage.py makemigrations iislayers
 python manage.py migrate iislayers
 python manage.py createsuperuser
 ```
+
+## Deploy
+
+[On Pythonanywhere](https://tutorial.djangogirls.org/pt/deploy/#configurando-o-seu-blog-no-pythonanywhere)
+```commandline
+pip3.6 install --user pythonanywhere
+
+pa_autoconfigure_django.py https://github.com/<your-github-username>/my-first-blog.git
+```
+
+```commandline
+
+ cd <your-pythonanywhere-domain>.pythonanywhere.com
+$ git pull
+```
