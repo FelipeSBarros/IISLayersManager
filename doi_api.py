@@ -4,7 +4,7 @@ def getPaperMetaData(doi = '10.1016/j.tree.2019.01.013'):
     sub = ''
     orcid = ''
 
-    empty_result = {'paper_title': 'Error on DOI',
+    empty_result = {'paper_title': '',
               'paper_link': '',
               'paper_subject': sub,
               'paper_author_ORCID': orcid,

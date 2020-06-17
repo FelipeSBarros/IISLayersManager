@@ -109,7 +109,8 @@ def edit_layer(request, pk):
             layer = form.save(commit=False)
             layer.modified_by = str(request.user)
             layer.modified_date = timezone.now()
-            if layer.doi is not None:
+
+            if layer.doi != '':
 
                 # request paper metadata based on DOI
                 paper_metadata_result = getPaperMetaData(layer.doi)
@@ -125,6 +126,6 @@ def edit_layer(request, pk):
             return redirect('iislayers:layer_details', pk=layer.pk)
     else:
         form = LayerForm(instance=layer)
-    return render(request, 'add_layer.html', {'form': form})
+    return render(request, 'edit_layer.html', {'form': form})
 
 layer_list = LayersListView.as_view()

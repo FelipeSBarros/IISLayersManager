@@ -22,6 +22,8 @@ class LayerForm(forms.ModelForm):
 
         # About layer publication
         'doi',
+        'paper_title',
+        'paper_author',
         'project_name',
 
         # Layer link
