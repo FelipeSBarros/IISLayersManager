@@ -93,8 +93,8 @@ def add_layer(request):
             context = {
                 'layer': layer,
             }
-            return render(request, template_name, context)
-            #return redirect('post_detail', pk=post.pk)
+            #return render(request, template_name, context)
+            return redirect('iislayers:layer_details', pk=layer.pk)
 
     else:
         form = LayerForm()
