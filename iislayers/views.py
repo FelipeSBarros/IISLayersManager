@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView
@@ -129,4 +129,46 @@ def edit_layer(request, pk):
         form = LayerForm(instance=layer)
     return render(request, 'edit_layer.html', {'form': form})
 
+@login_required
+def edit_layer(request, pk):
+    layer = get_object_or_404(Layer, pk=pk)
+    if request.method == "POST":
+        form = LayerForm(request.POST, instance=layer)
+        if form.is_valid():
+            layer = form.save(commit=False)
+            layer.modified_by = str(request.user)
+            layer.modified_date = timezone.now()
+
+            if layer.doi != '': # If DOI informed in edition, then the metadata will be retrieved
+
+                # request paper metadata based on DOI
+                paper_metadata_result = getPaperMetaData(layer.doi)
+
+                # About layer publication
+                layer.published_year = str(paper_metadata_result['paper_year'])
+                layer.paper_title = paper_metadata_result['paper_title']
+                layer.paper_author = paper_metadata_result['paper_author']
+                layer.paper_author_ORCID = paper_metadata_result['paper_author_ORCID']
+                layer.paper_link = paper_metadata_result['paper_link']
+                layer.paper_subject = paper_metadata_result['paper_subject']
+            layer.save()
+            return redirect('iislayers:layer_details', pk=layer.pk)
+    else:
+        form = LayerForm(instance=layer)
+    return render(request, 'edit_layer.html', {'form': form})
+
 layer_list = LayersListView.as_view()
+
+@login_required
+def remove_confirmation(request, pk):
+    layer = get_object_or_404(Layer, pk=pk)
+    context = {
+        'layer': layer,
+    }
+    return render(request, 'remove.html', context)
+
+@login_required
+def remove_layer(request, pk):
+    layer = get_object_or_404(Layer, pk=pk)
+    layer.delete()
+    return HttpResponseRedirect('/layerslist')

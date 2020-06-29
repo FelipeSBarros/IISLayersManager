@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class = "container">
+    <div class="alert alert-danger" role="alert">
+        <h1><span class="fa fa-warning"  style="color:black">
+        You are about to remove {{ layer.layer_name }}</span></h1>
+        </div>
+
+<a class="btn btn-success" href="{% url 'iislayers:list' %}"><span class="fa fa-undo"></span> undo</a>
+
+<a class="btn btn-warning" href="{% url 'iislayers:remove_layer' pk=layer.pk %}"><span class="fa fa-trash"></span> Remove</a>
+    </div>
+
+{% endblock content %}
