@@ -73,7 +73,7 @@ def add_layer(request):
             layer.created_date = timezone.now()
             layer.modified_by = request.user
             layer.modified_date = timezone.now()
-            if layer.doi is not None:
+            if layer.doi is not None: # TODO Think that this IF statement is not necessary
 
                 # request paper metadata based on DOI
                 paper_metadata_result = getPaperMetaData(layer.doi)
@@ -88,11 +88,12 @@ def add_layer(request):
 
             layer.save()
 
-            template_name = 'layer_details.html'
-            #layer_added = Layer.objects.get(pk=pk)
-            context = {
-                'layer': layer,
-            }
+            # TODO unused Perguntar ao Benigno a diferença
+            #template_name = 'layer_details.html'
+            #'layer_added = Layer.objects.get(pk=pk)
+            #context = {
+            #    'layer': layer,
+            #}
             #return render(request, template_name, context)
             return redirect('iislayers:layer_details', pk=layer.pk)
 
@@ -110,7 +111,7 @@ def edit_layer(request, pk):
             layer.modified_by = str(request.user)
             layer.modified_date = timezone.now()
 
-            if layer.doi != '':
+            if layer.doi != '': # If DOI informed in edition, then the metadata will be retrieved
 
                 # request paper metadata based on DOI
                 paper_metadata_result = getPaperMetaData(layer.doi)

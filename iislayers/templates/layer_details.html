@@ -53,7 +53,11 @@
         </tr>
 
         <th class="text-right">Paper author</th>
-        <td><a href="{{ layer.paper_author_ORCID }}">{{ layer.paper_author }}</a></td>
+            {% if layer.paper_author_ORCID %}
+                <td><a href="{{ layer.paper_author_ORCID }}">{{ layer.paper_author }}</a></td>
+            {% else %}
+                <td>{{ layer.paper_author }}</td>
+            {% endif %}
         </tr>
 
             <th class="text-right">Publication year</th>
@@ -61,7 +65,12 @@
         </tr>
 
             <th class="text-right">Publication title</th>
-            <td><a href="{{ layer.paper_link }}">{{ layer.paper_title }}</a></td>
+            {% if layer.paper_author_ORCID %}
+                <td><a href="{{ layer.paper_link }}">{{ layer.paper_title }}</a></td>
+            {% else %}
+                <td>{{ layer.paper_title }}</td>
+            {% endif %}
+
         </tr>
 
             <th class="text-right">Paper subject</th>

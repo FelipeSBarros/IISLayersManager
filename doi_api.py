@@ -19,7 +19,7 @@ def getPaperMetaData(doi = '10.1016/j.tree.2019.01.013'):
     else:
         print("DOI passed")
         paper_url = f"https://api.crossref.org/works/{doi}"
-        # retriving paper metadata
+        # retrieving paper metadata
         paper_metadata = requests.get(paper_url)
         # Testing if paper found
         if paper_metadata.status_code != 200:
