@@ -37,8 +37,9 @@ pip3.6 install --user pythonanywhere
 pa_autoconfigure_django.py https://github.com/<your-github-username>/my-first-blog.git
 ```
 
+# Updating from github
+After pulling changes to github projet, go to pythonanywhere.com and login with the username. Then, access bahs console and update it, like showed above: 
 ```commandline
-
- cd <your-pythonanywhere-domain>.pythonanywhere.com
-$ git pull
+cd <your-pythonanywhere-domain>.pythonanywhere.com
+git pull
 ```
