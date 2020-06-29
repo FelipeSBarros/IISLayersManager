@@ -1,44 +1,41 @@
+# IIS Layer Manager
 
-```
-python -m pip install --upgrade pip
-pip install django pandas
-```
+## Developing from github project  
 
-## Creating project
-
-```
-django-admin startproject IISLayersManager .
-```
-
-#### Settings
-* change timezone
-* change lenguage (if necessary)
-
-## Creating app
-
+* Clone repo;
 ```commandline
-python manage.py startapp iislayers
+git clone https://github.com/marcellobenigno/geopocos.git
+cd geopocos
 ```
-
-**Após criar o models:**
+* Create virtualenv;
+```commandline
+python -m venv .venv
 ```
+* Activate virtualenv;
+```commandline
+source .venv/bin/activate
+```
+* Install dependencies/requirements;
+```
+pip install -r requirements-dev.txt
+```
+* Crie o banco de dados espacial como foi descrito acima;
+```commandline
+python manage.py makemigrations
 python manage.py migrate
-python manage.py makemigrations iislayers
-python manage.py migrate iislayers
+```
+* Run runserver
+```commandline
+python manage.py runserver
+```
+* Creating superuser
+```
 python manage.py createsuperuser
 ```
 
-## Deploy
-
-[On Pythonanywhere](https://tutorial.djangogirls.org/pt/deploy/#configurando-o-seu-blog-no-pythonanywhere)
-```commandline
-pip3.6 install --user pythonanywhere
-
-pa_autoconfigure_django.py https://github.com/<your-github-username>/my-first-blog.git
-```
-
-# Updating from github
-After pulling changes to github projet, go to pythonanywhere.com and login with the username. Then, access bahs console and update it, like showed above: 
+# Deploy changes from github
+After pulling changes to github project, go to pythonanywhere.com and login with the username.  
+Then, access bahs console and update it, like showed above: 
 ```commandline
 cd <your-pythonanywhere-domain>.pythonanywhere.com
 git pull
